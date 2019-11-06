@@ -6,8 +6,10 @@ for i in range(100):
 if this == asp.net:
   print yes
 else:
-  print no
+  print nope
 do all the editing
 
 
 please enter your name here:_______
+
+Alright this is working.
