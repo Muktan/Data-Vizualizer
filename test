@@ -3,11 +3,13 @@ for i in range(100):
   print("helo")
   
   
-if this == asp.net:
+if this == .net:
+  print welcome
   print yes
 else:
   print no
 do all the editing
 
+print()
 
 please enter your name here:_______
