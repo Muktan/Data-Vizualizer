@@ -7,7 +7,7 @@ if this == .net:
   print welcome
   print yes
 else:
-  print nope
+  print nope123
 do all the editing
 
 print()
