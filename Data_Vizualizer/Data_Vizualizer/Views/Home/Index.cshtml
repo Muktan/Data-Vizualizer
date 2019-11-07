@@ -8,6 +8,50 @@
     <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
 </div>
 
+
+<div>
+    hello:-
+    <pre>@Html.Raw(ViewBag.maindata)</pre>
+
+
+</div>
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+
+<script>
+    window.onload = function () {
+        alert("hey");
+        var chart = new CanvasJS.Chart("chartContainer", {
+	        animationEnabled: true,
+	        theme: "light2",
+	        zoomEnabled: true,
+	        title: {
+		        text: "Correlation b/w Height & Pulmonary Dead Space in Children",
+		        fontSize: 20
+	        },
+	        subtitles: [{
+		        text: "Anatomical dead space is that portion of the airways to lungs where gaseous exchange is not possible.",
+		        fontSize: 13
+	        }],
+	        axisX: {
+		        title: "Height of Children (in cm)",
+		        titleFontSize: 13
+	        },
+	        axisY: {
+		        title: "Anatomical Dead Space (in ml)",
+		        titleFontSize: 13
+	        },
+	        data: [{
+		        type: "scatter",
+		        toolTipContent: "<b>Height: </b>{x} cm<br/><b>ADS: </b> {y} ml",
+                dataPoints: [{ "x": 1, "y": 2 }, { "x": 2, "y": 3 }]
+	        }]
+        });
+        chart.render();
+    }
+</script>
+
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
 <div class="row">
     <div class="col-md-4">
         <h2>Getting started</h2>
