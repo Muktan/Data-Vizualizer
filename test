@@ -1,13 +1,19 @@
 hello
 for i in range(100):
-  print("helo")
+  print("helo Muktan")
   
   
-if this == asp.net:
+if this == .net:
+  print welcome
   print yes
 else:
-  print no
+  print nope123
 do all the editing
 
+print()
 
-please enter your name here:_______
+
+please enter your name here:Muktan
+Muk roxxxzz
+Alright this is working.
+
