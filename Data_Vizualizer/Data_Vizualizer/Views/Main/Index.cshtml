@@ -15,50 +15,81 @@
 <form action="/Main/Index" method="post">
     <div class="form-group">
         <label for="exampleFormControlTextarea1">Example textarea</label>
-        <textarea class="form-control" name="data" id="exampleFormControlTextarea1" rows="10"></textarea>
+        <textarea class="form-control" name="data" id="exampleFormControlTextarea1" rows="10">@ViewBag.data</textarea>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
 
 
-<!--<button class="btn btn-danger">hello</button>-->
 
-<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+
+
+
+<div>
+    @if (@ViewBag.cerr != null && @ViewBag.cerr)
+    {
+        <h2>@ViewBag.cerrMessage</h2>
+        foreach (var item in ViewBag.celist)
+        {
+            <p>@item</p>
+        }
+    }
+
+</div>
+
+
+<div>
+    @if (@ViewBag.dterr != null && @ViewBag.dterr)
+    {
+        <h2>@ViewBag.dterrMessage</h2>
+        foreach (var item in ViewBag.dtelist)
+        {
+            <p>@item[0] @(item[1]+1)</p>
+        }
+    }
+
+</div>
+<!--<button class="btn btn-danger">hello</button>-->
+<!--
+   <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
+-->
 <!--CHART PLOTTING-->
-<script>
+<!--
+    <script>
 window.onload = function () {
 
     var chart = new CanvasJS.Chart("chartContainer", {
-	    animationEnabled: true,
-	    theme: "light2",
-	    zoomEnabled: true,
-	    title: {
-		    text: "Correlation b/w Height & Pulmonary Dead Space in Children",
-		    fontSize: 20
-	    },
-	    subtitles: [{
-		    text: "Anatomical dead space is that portion of the airways to lungs where gaseous exchange is not possible.",
-		    fontSize: 13
-	    }],
-	    axisX: {
-		    title: "Height of Children (in cm)",
-		    titleFontSize: 13
-	    },
-	    axisY: {
-		    title: "Anatomical Dead Space (in ml)",
-		    titleFontSize: 13
-	    },
-	    data: [{
-		    type: "scatter",
-		    toolTipContent: "<b>Height: </b>{x} cm<br/><b>ADS: </b> {y} ml",
-		    dataPoints: @Html.Raw(ViewBag.DataPoints)
-	    }]
+        animationEnabled: true,
+        theme: "light2",
+        zoomEnabled: true,
+        title: {
+            text: "Correlation b/w Height & Pulmonary Dead Space in Children",
+            fontSize: 20
+        },
+        subtitles: [{
+            text: "Anatomical dead space is that portion of the airways to lungs where gaseous exchange is not possible.",
+            fontSize: 13
+        }],
+        axisX: {
+            title: "Height of Children (in cm)",
+            titleFontSize: 13
+        },
+        axisY: {
+            title: "Anatomical Dead Space (in ml)",
+            titleFontSize: 13
+        },
+        data: [{
+            type: "scatter",
+            toolTipContent: "<b>Height: </b>{x} cm<br/><b>ADS: </b> {y} ml",
+            dataPoints: @Html.Raw(ViewBag.DataPoints)
+        }]
     });
     chart.render();
 
 }
 </script>
+-->
 <!--CHART PLOTTING ENDS-->
