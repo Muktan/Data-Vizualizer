@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "DataTypeDecider";
+}
+
+<h2>DataTypeDecider</h2>
+
+<form action="/DataTypeDecider/DataTypeDecider" method="post">
+    <div class="form-group">
+        <label for="exampleFormControlTextarea1">Example textarea</label>
+        <textarea class="form-control" name="data" id="exampleFormControlTextarea1" rows="10"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
+
+<div id="dataContainer" style="height: 370px; width: 100%;margin-top:100px;"></div>
+
+
+<script>
+    window.onload = function () {
+        var data = '@ViewBag.data';
+
+        var data1 = data.split(',');
+        var p = "";
+      //  console.log(data1);
+        data1.forEach(myFunction);
+        function myFunction(value, index, array) {
+            if (index == data1.length - 1) {
+                if (isNaN(value)) {
+                    p += typeof value;
+                }
+                else {
+                    data1[index] = parseFloat(data1[index]);
+                    p += typeof data1[index];
+                }
+            }
+            else {
+                if (isNaN(value)) {
+                    p += typeof value + ",";
+                }
+                else {
+                    data1[index] = parseFloat(data1[index]);
+                    p += typeof data1[index] + ",";
+                }
+            }
+            
+            
+        }
+
+      //  console.log(p);
+
+
+        document.getElementById("dataContainer").innerHTML = p;
+    }
+</script>

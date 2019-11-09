@@ -16,8 +16,13 @@ namespace Data_Vizualizer
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "DataTypeDecider", action = "DataTypeDecider", id = UrlParameter.Optional }
             );
+           /* routes.MapRoute(
+                name: "Default",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Main", action = "Index", id = UrlParameter.Optional }
+            );*/
         }
     }
 }
