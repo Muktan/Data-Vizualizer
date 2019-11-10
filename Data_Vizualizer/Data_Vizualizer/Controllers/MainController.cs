@@ -130,13 +130,173 @@ namespace Data_Vizualizer.Controllers
                 ViewBag.dtelist = dataTypeErrList;
 
             }
+            if (dataTypeErrList.Count == 0 && CountErrList.Count == 0)
+            {
+                //both are zero means no error just move to new view
+                //keep all the things that you need with you
+                //we need whole data in next view
+                //store that in TempData
+                TempData["data"] = data;
+                return RedirectToAction("Plot");
+
+            }
 
 
             
             ViewBag.data = data;
             return View();
-        } 
+        }
+
+        public ActionResult Plot()
+        {
+            //hey I got my data in temp data
+            //now i will get my data !remember to just use peek
+            //this is get request so just show user the option of the graph which he want to 
+
+            //try using value property in view and then post so we can plot the specific graph
+
+
+            string data = "";
+
+           
+            if (TempData["data"] != null)
+            {
+                data = TempData.Peek("data").ToString();
+                TempData.Keep("data");
+            }
+            //step2: just present the view and get the data from user regarding the graph he want to plot
+            string[] Result = data.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+            //ok now here we have the Result zero as labels
+            string[] Labels = Result[0].Split(new string[] { "," }, StringSplitOptions.None);
+            string[] tempr1 = Result[1].Split(new string[] { "," }, StringSplitOptions.None);
+            List<string> dataTypeR1 = new List<string>();
+
+            foreach (string item in tempr1)
+            {
+                DateTime t1;
+                double t2;
+                int t3;
+
+                if (int.TryParse(item, out t3))
+                {
+                    dataTypeR1.Add("Integer");
+                }
+                else if (double.TryParse(item, out t2))
+                {
+                    dataTypeR1.Add("Double");
+                }
+                else if (DateTime.TryParse(item, CultureInfo.CreateSpecificCulture("en-US"), DateTimeStyles.None, out t1))
+                {
+                    dataTypeR1.Add("Date");
+                }
+                else
+                {
+                    dataTypeR1.Add("String");
+                }
+
+
+            }
+            ViewBag.Labels = Labels;
+            
+            ViewBag.datatype = dataTypeR1;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Plot(FormCollection fc)
+        {
+            //selected x axis
+            string schart = fc["schart"];
+            string xs = fc["xaxis_select"];
+            string ys = fc["yaxis_select"];
+
+            //now from selected chart 
+            if (schart == "Scatter plot")
+            {
+                //in future we may use a non action method but now we are doing it here
+                //to plot scatter plot we just have to send data points to the view
+                //set a flag so that view can know if data points are set or not
+                ViewBag.splotflag = true;
+
+                //god sake we will be having the tempdata to peek in it
+                string data = (string)TempData.Peek("data");
+
+                string[] Result = data.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+                //ok now here we have the Result zero as labels
+                string[] Labels = Result[0].Split(new string[] { "," }, StringSplitOptions.None);
+                string[] tempr1 = Result[1].Split(new string[] { "," }, StringSplitOptions.None);
+                List<string> dataTypeR1 = new List<string>();
+
+                foreach (string item in tempr1)
+                {
+                    DateTime t1;
+                    double t2;
+                    int t3;
+
+                    if (int.TryParse(item, out t3))
+                    {
+                        dataTypeR1.Add("Integer");
+                    }
+                    else if (double.TryParse(item, out t2))
+                    {
+                        dataTypeR1.Add("Double");
+                    }
+                    else if (DateTime.TryParse(item, CultureInfo.CreateSpecificCulture("en-US"), DateTimeStyles.None, out t1))
+                    {
+                        dataTypeR1.Add("Date");
+                    }
+                    else
+                    {
+                        dataTypeR1.Add("String");
+                    }
+
+
+                }
+                ViewBag.labels = Labels;
+
+                ViewBag.datatype = dataTypeR1;
+                int xindex=-1;
+                int yindex = -1;
+                for (int i = 0; i < Labels.Length; i++)
+                {
+                    if (Labels[i] == xs)
+                    {
+                        xindex = i;
+                    }
+                    if (Labels[i] == ys)
+                    {
+                        yindex = i;
+                    }
+                }
+                List<DataPoint> ls = new List<DataPoint>();
+                //loop
+                for (int i = 1; i < Result.Length; i++)
+                {
+                    string[] temp = Result[i].Split(new string[] { "," }, StringSplitOptions.None);
+                    //here it won't always be just temp[0] or temp[1] it totally depends on against
+                    //which labels user want to plot the graphs
+                    try
+                    {
+                        ls.Add(new DataPoint(double.Parse(temp[xindex]), double.Parse(temp[yindex])));
+                    }
+                    catch (Exception)
+                    {
+                        //set err flag
+                        bool perr = true;
+                        //set message
+                        string perrmsg = "";
+                        //render view
+                    }
+
+                }
+
+                ViewBag.DataPoints = JsonConvert.SerializeObject(ls);
+            }
+
+            return View();
+        }
     }
+
 }
 
 

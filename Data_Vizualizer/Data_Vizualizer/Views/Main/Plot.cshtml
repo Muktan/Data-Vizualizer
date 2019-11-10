@@ -1,0 +1,114 @@
+﻿
+@{
+                /**/
+
+                ViewBag.Title = "Plot";
+}
+
+<h2>Plot</h2>
+
+<form action="/Main/Plot" method="post">
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Options</label>
+        </div>
+        <select class="custom-select" name="schart" id="ChartSelection">
+            <option value="Scatter plot">Scatter plot</option>
+            <option value="Bar graph">Bar graph</option>
+            <option value="Corelation matrix">Corelation matrix</option>
+            <option value="Pie chart">Pie chart</option>
+            <option value="Boxplot">Boxplot</option>
+            <option value="Histogram">Histogram</option>
+        </select>
+    </div>
+
+
+    <div class="input-group mb-3 scatter_section">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="xaxis">X-axis</label>
+        </div>
+        <select name="xaxis_select" class="custom-select" id="xaxis">
+            <!--ONLY  the numbers, so integer or double only-->
+            @{
+                for (int i = 0; i < ViewBag.Labels.Length; i++)
+                {
+                    if (ViewBag.datatype[i] == "Integer" || ViewBag.datatype[i] == "Double")
+                    {
+                        <option value="@ViewBag.Labels[i]">@ViewBag.Labels[i]</option>
+                    }
+                }
+            }
+        </select>
+    </div>
+    <div class="input-group mb-3 scatter_section">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="yaxis">Y-axis</label>
+        </div>
+        <select class="custom-select" name="yaxis_select" id="yaxis">
+            <!--ONLY  the numbers, so integer or double only-->
+            @{
+                for (int i = 0; i < ViewBag.Labels.Length; i++)
+                {
+                    if (ViewBag.datatype[i] == "Integer" || ViewBag.datatype[i] == "Double")
+                    {
+                        <option value="@ViewBag.Labels[i]">@ViewBag.Labels[i]</option>
+                    }
+                }
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary" id="subButton">Submit</button>
+
+</form>
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+
+@{
+    if (ViewBag.splotflag != null && ViewBag.splotflag == true)
+    {
+        //now just plot the graph
+        <script>
+            window.onload = function () {
+
+                var chart = new CanvasJS.Chart("chartContainer", {
+                    animationEnabled: true,
+                    theme: "light2",
+                    zoomEnabled: true,
+                    title: {
+                        text: "Correlation b/w Height & Pulmonary Dead Space in Children",
+                        fontSize: 20
+                    },
+                    subtitles: [{
+                        text: "Anatomical dead space is that portion of the airways to lungs where gaseous exchange is not possible.",
+                        fontSize: 13
+                    }],
+                    axisX: {
+                        title: "Height of Children (in cm)",
+                        titleFontSize: 13
+                    },
+                    axisY: {
+                        title: "Anatomical Dead Space (in ml)",
+                        titleFontSize: 13
+                    },
+                    data: [{
+                        type: "scatter",
+                        toolTipContent: "<b>Height: </b>{x} cm<br/><b>ADS: </b> {y} ml",
+                        dataPoints: @Html.Raw(ViewBag.DataPoints)
+                    }]
+                });
+                chart.render();
+
+            }
+        </script>
+    }
+}
+
+<script>
+    $(document).ready(function () {
+        $("#ChartSelection").change(function () {
+            //hide all other sections and just show one section
+            $(".scatter_section").show();
+        });
+    });
+</script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
