@@ -1,6 +1,13 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Data_Vizualizer",
+    "\\Data_Vizualizer\\Data_Vizualizer",
+    "\\Data_Vizualizer\\Data_Vizualizer\\Views",
+    "\\Data_Vizualizer\\Data_Vizualizer\\Views\\Main",
+    "\\ExcelDataReader.DataSet.3.6.0",
+    "\\FileUpload",
+    "\\Uploads"
   ],
   "PreviewInSolutionExplorer": false
 }
