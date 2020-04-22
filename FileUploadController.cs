@@ -50,6 +50,7 @@ namespace Data_Vizualizer.Controllers
                     if (FileUpload1.FileName.EndsWith(".csv"))
                     {
                         DataTable dt = Utility.ConvertCSVtoDataTable(path1);
+                        
                         ViewBag.Data = dt;
                     }
 
